@@ -1,0 +1,77 @@
+aid: deepsource
+name: DeepSource
+review:
+  question: Does DeepSource expose a documented public WebSocket API?
+  answer: false
+  date: '2026-06-21'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was created. DeepSource's developer platform is a
+    single GraphQL API served over HTTP POST at https://api.deepsource.com/graphql/.
+    No WebSocket, Server-Sent Events, or GraphQL subscription transport is
+    documented, so there is no event-driven or streaming surface in scope for
+    AsyncAPI modeling.
+findings:
+  summary: |
+    DeepSource does not publish a documented public WebSocket API. The developer
+    platform is exposed entirely as a GraphQL API reached via HTTP POST to a
+    single endpoint, https://api.deepsource.com/graphql/ (legacy host
+    https://api.deepsource.io/graphql/; on-premise https://<host>/api/graphql/).
+    Authentication is a Personal Access Token passed as an Authorization Bearer
+    credential. The schema exposes queries (viewer, account, repository, run,
+    analyzer/analyzers, codeFormatter/codeFormatters, installation, node) and
+    mutations (activate/deactivate repository, regenerate DSN, update default
+    branch, quality-gate and issue-suppression settings). No GraphQL
+    subscription, WebSocket (ws:// or wss://), or SSE streaming transport is
+    documented.
+  transports:
+    - protocol: GraphQL
+      scheme: https
+      baseURL: https://api.deepsource.com/graphql
+      method: POST
+      documented: true
+      note: Single GraphQL endpoint; all queries and mutations are HTTP POST with a JSON body containing query and variables.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented in the DeepSource API reference or schema overview as of the review date.
+    - protocol: SSE
+      scheme: https
+      documented: false
+      note: No Server-Sent Events streaming transport is documented.
+    - protocol: GraphQL Subscriptions
+      scheme: wss
+      documented: false
+      note: The schema documents Query and Mutation root types only; no Subscription type is documented.
+  endpointsConfirmed:
+    - POST https://api.deepsource.com/graphql/
+    - POST https://api.deepsource.io/graphql/ (legacy host)
+    - POST https://<hostname>/api/graphql/ (on-premise)
+  authentication:
+    scheme: Bearer
+    credential: Personal Access Token (PAT)
+    header: 'Authorization: Bearer <PERSONAL_ACCESS_TOKEN>'
+sources:
+  - url: https://docs.deepsource.com/docs/developers/api
+    type: Documentation
+    note: API overview gives the GraphQL endpoint, Bearer PAT auth, and an example curl POST.
+  - url: https://docs.deepsource.com/docs/developers/api/schema
+    type: APIReference
+    note: Schema overview lists root query fields and mutation categories; no Subscription type.
+  - url: https://docs.deepsource.com/docs/developers/api/repository
+    type: APIReference
+    note: Repository quickstart shows example GraphQL queries and mutations over HTTP POST.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket, SSE, or GraphQL subscription surface exists, so no AsyncAPI
+    document was authored. The catalog models the GraphQL transport via a
+    GraphQL SDL (graphql/deepsource-schema.graphql), a GraphQL markdown guide
+    (graphql/deepsource-graphql.md), and an OpenAPI 3.0.1 document
+    (openapi/deepsource-openapi.yml) describing the single POST /graphql/
+    transport with Bearer authentication.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

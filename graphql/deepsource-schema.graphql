@@ -1,0 +1,500 @@
+"""
+DeepSource GraphQL Schema (representative)
+
+Hand-written, representative SDL for the DeepSource developer platform GraphQL API.
+Endpoint: https://api.deepsource.com/graphql/  (POST, Bearer Personal Access Token)
+Source: https://docs.deepsource.com/docs/developers/api
+        https://docs.deepsource.com/docs/developers/api/schema
+        https://docs.deepsource.com/docs/developers/api/repository
+
+This is NOT the provider's machine-generated introspection schema. Root fields,
+connections, and mutation names mirror the documented API; nested field sets are
+illustrative and may differ from the live schema. Use introspection against the
+live endpoint for the authoritative schema.
+"""
+
+# ---------------------------------------------------------------------------
+# Scalars
+# ---------------------------------------------------------------------------
+
+scalar DateTime
+scalar JSONString
+scalar ID
+
+# ---------------------------------------------------------------------------
+# Enums
+# ---------------------------------------------------------------------------
+
+enum VCSProvider {
+  GITHUB
+  GITLAB
+  BITBUCKET
+  GITHUB_ENTERPRISE
+  GSR
+  ADS
+}
+
+enum RunStatus {
+  PENDING
+  READY
+  SKIPPED
+  FAILURE
+  TIMEOUT
+  CANCEL
+}
+
+enum CheckStatus {
+  WAITING
+  PENDING
+  SUCCESS
+  FAILURE
+  TIMEOUT
+  CANCEL
+}
+
+enum IssueCategory {
+  BUG_RISK
+  ANTIPATTERN
+  PERFORMANCE
+  SECURITY
+  TYPECHECK
+  STYLE
+  DOCUMENTATION
+  COVERAGE
+}
+
+enum VulnerabilitySeverity {
+  CRITICAL
+  HIGH
+  MEDIUM
+  LOW
+  INFORMATIONAL
+}
+
+# ---------------------------------------------------------------------------
+# Pagination (Relay)
+# ---------------------------------------------------------------------------
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+# ---------------------------------------------------------------------------
+# Account & User
+# ---------------------------------------------------------------------------
+
+type User {
+  id: ID!
+  email: String
+  fullName: String
+  dateJoined: DateTime
+  accounts(first: Int, after: String): AccountConnection
+}
+
+type Account {
+  id: ID!
+  login: String!
+  vcsProvider: VCSProvider!
+  repositories(first: Int, after: String, isPrivate: Boolean): RepositoryConnection
+  members(first: Int, after: String): AccountMemberConnection
+  suppressedIssues(first: Int, after: String): IssueConnection
+}
+
+type AccountConnection {
+  pageInfo: PageInfo!
+  edges: [AccountEdge]
+}
+type AccountEdge {
+  cursor: String!
+  node: Account
+}
+
+type AccountMember {
+  id: ID!
+  user: User
+  role: String
+  isBillable: Boolean
+}
+type AccountMemberConnection {
+  pageInfo: PageInfo!
+  edges: [AccountMemberEdge]
+}
+type AccountMemberEdge {
+  cursor: String!
+  node: AccountMember
+}
+
+# ---------------------------------------------------------------------------
+# Repository
+# ---------------------------------------------------------------------------
+
+type Repository {
+  id: ID!
+  name: String!
+  defaultBranch: String
+  defaultBranchName: String
+  dsn: String
+  isPrivate: Boolean
+  isActivated: Boolean
+  vcsProvider: VCSProvider
+  enabledAnalyzers(first: Int, after: String): AnalyzerConnection
+  analysisRuns(first: Int, after: String): RunConnection
+  pullRequest(number: Int!): PullRequest
+  pullRequests(first: Int, after: String): PullRequestConnection
+  issues(first: Int, after: String): RepositoryIssueConnection
+  issueOccurrences(first: Int, after: String): IssueOccurrenceConnection
+  ignoreRules(first: Int, after: String): IgnoreRuleConnection
+  dependencyVulnerabilityOccurrences(first: Int, after: String): VulnerabilityOccurrenceConnection
+  metrics: [Metric]
+  reports(first: Int, after: String): ReportConnection
+}
+
+type RepositoryConnection {
+  pageInfo: PageInfo!
+  edges: [RepositoryEdge]
+}
+type RepositoryEdge {
+  cursor: String!
+  node: Repository
+}
+
+# ---------------------------------------------------------------------------
+# Runs & Checks
+# ---------------------------------------------------------------------------
+
+type Run {
+  id: ID!
+  runUid: String!
+  commitOid: String
+  branchName: String
+  status: RunStatus
+  createdAt: DateTime
+  finishedAt: DateTime
+  checks(first: Int, after: String): CheckConnection
+}
+
+type RunConnection {
+  pageInfo: PageInfo!
+  edges: [RunEdge]
+}
+type RunEdge {
+  cursor: String!
+  node: Run
+}
+
+type Check {
+  id: ID!
+  analyzer: Analyzer
+  status: CheckStatus
+  finishedAt: DateTime
+  resolvedIssuesCount: Int
+  introducedIssuesCount: Int
+}
+
+type CheckConnection {
+  pageInfo: PageInfo!
+  edges: [CheckEdge]
+}
+type CheckEdge {
+  cursor: String!
+  node: Check
+}
+
+# ---------------------------------------------------------------------------
+# Pull Requests
+# ---------------------------------------------------------------------------
+
+type PullRequest {
+  id: ID!
+  number: Int!
+  title: String
+  status: String
+  latestAnalysisRun: Run
+}
+type PullRequestConnection {
+  pageInfo: PageInfo!
+  edges: [PullRequestEdge]
+}
+type PullRequestEdge {
+  cursor: String!
+  node: PullRequest
+}
+
+# ---------------------------------------------------------------------------
+# Issues & Occurrences
+# ---------------------------------------------------------------------------
+
+type Issue {
+  id: ID!
+  shortcode: String!
+  title: String
+  category: IssueCategory
+  description: String
+  analyzer: Analyzer
+}
+
+type IssueConnection {
+  pageInfo: PageInfo!
+  edges: [IssueEdge]
+}
+type IssueEdge {
+  cursor: String!
+  node: Issue
+}
+
+type RepositoryIssue {
+  id: ID!
+  issue: Issue
+  occurrenceCount: Int
+}
+type RepositoryIssueConnection {
+  pageInfo: PageInfo!
+  edges: [RepositoryIssueEdge]
+}
+type RepositoryIssueEdge {
+  cursor: String!
+  node: RepositoryIssue
+}
+
+type IssueOccurrence {
+  id: ID!
+  issue: Issue
+  path: String
+  beginLine: Int
+  endLine: Int
+  title: String
+}
+type IssueOccurrenceConnection {
+  pageInfo: PageInfo!
+  edges: [IssueOccurrenceEdge]
+}
+type IssueOccurrenceEdge {
+  cursor: String!
+  node: IssueOccurrence
+}
+
+type IgnoreRule {
+  id: ID!
+  pattern: String
+  reason: String
+  createdAt: DateTime
+}
+type IgnoreRuleConnection {
+  pageInfo: PageInfo!
+  edges: [IgnoreRuleEdge]
+}
+type IgnoreRuleEdge {
+  cursor: String!
+  node: IgnoreRule
+}
+
+# ---------------------------------------------------------------------------
+# Dependency vulnerabilities (SCA)
+# ---------------------------------------------------------------------------
+
+type Vulnerability {
+  id: ID!
+  identifier: String
+  severity: VulnerabilitySeverity
+  cvssV3BaseScore: Float
+  summary: String
+}
+
+type Package {
+  id: ID!
+  name: String
+  ecosystem: String
+  version: String
+}
+
+type VulnerabilityOccurrence {
+  id: ID!
+  vulnerability: Vulnerability
+  package: Package
+  reachable: Boolean
+}
+type VulnerabilityOccurrenceConnection {
+  pageInfo: PageInfo!
+  edges: [VulnerabilityOccurrenceEdge]
+}
+type VulnerabilityOccurrenceEdge {
+  cursor: String!
+  node: VulnerabilityOccurrence
+}
+
+# ---------------------------------------------------------------------------
+# Analyzers & Code Formatters
+# ---------------------------------------------------------------------------
+
+type Analyzer {
+  id: ID!
+  name: String!
+  shortcode: String!
+  description: String
+  analyzerLogo: String
+}
+type AnalyzerConnection {
+  pageInfo: PageInfo!
+  edges: [AnalyzerEdge]
+}
+type AnalyzerEdge {
+  cursor: String!
+  node: Analyzer
+}
+
+type CodeFormatter {
+  id: ID!
+  name: String!
+  shortcode: String!
+  description: String
+}
+type CodeFormatterConnection {
+  pageInfo: PageInfo!
+  edges: [CodeFormatterEdge]
+}
+type CodeFormatterEdge {
+  cursor: String!
+  node: CodeFormatter
+}
+
+# ---------------------------------------------------------------------------
+# Reports & Metrics
+# ---------------------------------------------------------------------------
+
+type Metric {
+  name: String
+  shortcode: String
+  value: Float
+  threshold: Float
+}
+
+type Report {
+  id: ID!
+  key: String
+  generatedAt: DateTime
+}
+type ReportConnection {
+  pageInfo: PageInfo!
+  edges: [ReportEdge]
+}
+type ReportEdge {
+  cursor: String!
+  node: Report
+}
+
+# ---------------------------------------------------------------------------
+# Installation
+# ---------------------------------------------------------------------------
+
+type Installation {
+  id: ID!
+  login: String
+  vcsProvider: VCSProvider
+}
+
+# ---------------------------------------------------------------------------
+# Root Query
+# ---------------------------------------------------------------------------
+
+type Query {
+  viewer: User
+  account(login: String!, vcsProvider: VCSProvider!): Account
+  repository(name: String!, login: String!, vcsProvider: VCSProvider!): Repository
+  run(runUid: String!): Run
+  analyzer(shortcode: String!): Analyzer
+  analyzers(first: Int, after: String): AnalyzerConnection
+  codeFormatter(shortcode: String!): CodeFormatter
+  codeFormatters(first: Int, after: String): CodeFormatterConnection
+  installation: Installation
+  node(id: ID!): Node
+}
+
+interface Node {
+  id: ID!
+}
+
+# ---------------------------------------------------------------------------
+# Mutation inputs & payloads
+# ---------------------------------------------------------------------------
+
+input ActivateRepositoryInput {
+  repositoryId: ID!
+  clientMutationId: String
+}
+type ActivateRepositoryPayload {
+  ok: Boolean
+  repository: Repository
+  clientMutationId: String
+}
+
+input DeactivateRepositoryInput {
+  repositoryId: ID!
+  clientMutationId: String
+}
+type DeactivateRepositoryPayload {
+  ok: Boolean
+  clientMutationId: String
+}
+
+input UpdateRepositoryDefaultBranchInput {
+  repositoryId: ID!
+  defaultBranchName: String!
+  clientMutationId: String
+}
+type UpdateRepositoryDefaultBranchPayload {
+  ok: Boolean
+  repository: Repository
+  clientMutationId: String
+}
+
+input RegenerateRepositoryDSNInput {
+  repositoryId: ID!
+  clientMutationId: String
+}
+type RegenerateRepositoryDSNPayload {
+  ok: Boolean
+  repository: Repository
+  clientMutationId: String
+}
+
+input UpdateRepositoryIssueCategorySettingInput {
+  repositoryId: ID!
+  category: IssueCategory!
+  isBlocking: Boolean!
+  clientMutationId: String
+}
+type UpdateRepositoryIssueCategorySettingPayload {
+  ok: Boolean
+  clientMutationId: String
+}
+
+input SuppressIssueInput {
+  repositoryId: ID!
+  shortcode: String!
+  clientMutationId: String
+}
+type SuppressIssuePayload {
+  ok: Boolean
+  clientMutationId: String
+}
+
+# ---------------------------------------------------------------------------
+# Root Mutation
+# ---------------------------------------------------------------------------
+
+type Mutation {
+  activateRepository(input: ActivateRepositoryInput!): ActivateRepositoryPayload
+  deactivateRepository(input: DeactivateRepositoryInput!): DeactivateRepositoryPayload
+  updateRepositoryDefaultBranch(input: UpdateRepositoryDefaultBranchInput!): UpdateRepositoryDefaultBranchPayload
+  regenerateRepositoryDSN(input: RegenerateRepositoryDSNInput!): RegenerateRepositoryDSNPayload
+  updateRepositoryIssueCategorySetting(input: UpdateRepositoryIssueCategorySettingInput!): UpdateRepositoryIssueCategorySettingPayload
+  suppressIssue(input: SuppressIssueInput!): SuppressIssuePayload
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}

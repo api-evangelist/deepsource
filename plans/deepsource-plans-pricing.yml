@@ -1,0 +1,129 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: DeepSource
+providerId: deepsource
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Code Quality
+- Static Analysis
+- Code Review
+- Security
+- GraphQL
+- Plans
+description: >-
+  DeepSource restructured pricing in February 2026 into three tiers: a free
+  Open Source plan for public repositories, a Team plan billed per active
+  contributor with annual billing, and a custom-priced Enterprise plan for
+  self-hosted deployment. The GraphQL API and webhooks are available across the
+  paid tiers. AI Review and Autofix are offered pay-as-you-go on the Open Source
+  plan. Read-only users, managers, and non-committing members are not billed.
+notes: >-
+  Per-seat price and included quotas reflect publicly reported figures as of the
+  February 2026 pricing change and may change; verify against the live DeepSource
+  pricing page on reconciliation.
+sources:
+- https://deepsource.com/pricing
+- https://docs.deepsource.com/docs/developers/api
+plans:
+- id: deepsource-open-source
+  name: Open Source
+  type: free
+  description: >-
+    Free plan for open-source organizations with public repositories.
+    Unlimited public repos and team members; AI Review and Autofix available
+    pay-as-you-go by adding a credit card.
+  entries:
+  - label: Public Repositories
+    name: public_repositories
+    type: flat
+    metric: repositories
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: free
+    userMultiplied: false
+  - label: Pull Request Reviews
+    name: pr_reviews
+    type: flat
+    metric: reviews
+    limit: 1000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Automated Code Formatting Runs
+    name: code_formatting_runs
+    type: flat
+    metric: runs
+    limit: 1000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  elements:
+  - name: Static Analysis
+  - name: SCA / Dependency Scanning
+  - name: Secrets Detection
+  - name: GraphQL API
+  - name: Webhooks
+  - name: AI Review (pay-as-you-go)
+  - name: Autofix (pay-as-you-go)
+- id: deepsource-team
+  name: Team
+  type: paid
+  description: >-
+    Primary commercial plan billed per active contributor with annual billing.
+    Includes all features - AI code review, unlimited Autofix, security scanning
+    (OWASP, SANS), secrets detection, code health dashboards, monorepo support,
+    audit logs, and API / webhooks.
+  entries:
+  - label: Per Active Contributor
+    name: per_active_contributor
+    type: usage
+    metric: seats
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $24 per active contributor / month (annual billing)
+    userMultiplied: true
+  elements:
+  - name: AI Code Review
+  - name: Unlimited Autofix
+  - name: Security Scanning (OWASP, SANS)
+  - name: Secrets Detection
+  - name: Code Health Dashboards
+  - name: Monorepo Support
+  - name: Audit Logs
+  - name: GraphQL API and Webhooks
+- id: deepsource-enterprise
+  name: Enterprise
+  type: enterprise
+  description: >-
+    Custom-priced plan adding self-hosted deployment, SSO / SCIM, and IP
+    restrictions. Contact DeepSource sales.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Self-Hosted Deployment
+  - name: SSO / SCIM
+  - name: IP Restrictions
+  - name: Custom Volume Pricing
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

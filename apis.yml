@@ -1,0 +1,124 @@
+aid: deepsource
+url: https://raw.githubusercontent.com/api-evangelist/deepsource/refs/heads/main/apis.yml
+name: DeepSource
+kind: company
+description: DeepSource is a code-quality and security platform that performs static
+  analysis, SCA, secrets detection, AI code review, and Autofix across repositories.
+  Its developer platform is a GraphQL API at https://api.deepsource.com/graphql/
+  exposing repositories, analysis runs, issues, checks, analyzers, and quality-gate
+  management, authenticated with a Personal Access Token Bearer credential.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Code Quality
+- Static Analysis
+- Code Review
+- Security
+- GraphQL
+created: '2026-06-21'
+modified: '2026-06-21'
+specificationVersion: '0.19'
+apis:
+- aid: deepsource:repositories
+  name: DeepSource Repositories API
+  tags:
+  - Repositories
+  - GraphQL
+  - Configuration
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.deepsource.com/docs/developers/api/repository
+  baseURL: https://api.deepsource.com/graphql
+  properties:
+  - url: https://docs.deepsource.com/docs/developers/api
+    type: Documentation
+  - url: https://docs.deepsource.com/docs/developers/api/repository
+    type: APIReference
+  - url: graphql/deepsource-graphql.md
+    type: GraphQL
+  - url: openapi/deepsource-openapi.yml
+    type: OpenAPI
+  description: GraphQL queries and mutations over the `repository` and `account`
+    root fields - fetch repository metadata, DSN, default branch, activation state,
+    enabled analyzers, and activate/deactivate analysis or update default branch.
+- aid: deepsource:issues
+  name: DeepSource Issues API
+  tags:
+  - Issues
+  - Occurrences
+  - GraphQL
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.deepsource.com/docs/developers/api/schema
+  baseURL: https://api.deepsource.com/graphql
+  properties:
+  - url: https://docs.deepsource.com/docs/developers/api
+    type: Documentation
+  - url: https://docs.deepsource.com/docs/developers/api/schema
+    type: APIReference
+  - url: graphql/deepsource-graphql.md
+    type: GraphQL
+  - url: openapi/deepsource-openapi.yml
+    type: OpenAPI
+  description: GraphQL access to detected issues, issue occurrences, dependency
+    vulnerability (SCA) occurrences, ignore rules, and team-level issue suppression
+    across a repository's analysis results.
+- aid: deepsource:runs-checks
+  name: DeepSource Runs and Checks API
+  tags:
+  - Runs
+  - Checks
+  - Analysis
+  - GraphQL
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.deepsource.com/docs/developers/api/schema
+  baseURL: https://api.deepsource.com/graphql
+  properties:
+  - url: https://docs.deepsource.com/docs/developers/api
+    type: Documentation
+  - url: https://docs.deepsource.com/docs/developers/api/schema
+    type: APIReference
+  - url: graphql/deepsource-graphql.md
+    type: GraphQL
+  - url: openapi/deepsource-openapi.yml
+    type: OpenAPI
+  description: GraphQL queries over the `run` root field and a repository's
+    `analysisRuns` - fetch analysis runs by UID or commit SHA, their per-analyzer
+    checks, status, and introduced/resolved issue counts.
+- aid: deepsource:analyzers
+  name: DeepSource Analyzers API
+  tags:
+  - Analyzers
+  - Code Formatters
+  - Transformers
+  - GraphQL
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.deepsource.com/docs/developers/api/schema
+  baseURL: https://api.deepsource.com/graphql
+  properties:
+  - url: https://docs.deepsource.com/docs/developers/api
+    type: Documentation
+  - url: https://docs.deepsource.com/docs/developers/api/schema
+    type: APIReference
+  - url: graphql/deepsource-graphql.md
+    type: GraphQL
+  - url: openapi/deepsource-openapi.yml
+    type: OpenAPI
+  description: GraphQL queries over the `analyzer`/`analyzers` and
+    `codeFormatter`/`codeFormatters` root fields - list available analyzers and
+    code formatters, their metadata, shortcodes, and supported transformers.
+common:
+- type: GitHubOrganization
+  url: https://github.com/deepsourcecorp
+- type: LinkedIn
+  url: https://www.linkedin.com/company/deepsource
+- type: Website
+  url: https://deepsource.com
+- type: Documentation
+  url: https://docs.deepsource.com/docs/developers/api
+- type: Plans
+  url: plans/deepsource-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/deepsource-rate-limits.yml
+- type: FinOps
+  url: finops/deepsource-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

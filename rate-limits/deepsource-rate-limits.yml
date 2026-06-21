@@ -1,0 +1,48 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: DeepSource
+providerId: deepsource
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Code Quality
+- Static Analysis
+- Code Review
+- Security
+- GraphQL
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  The DeepSource GraphQL API enforces a user-level rate limit reported at
+  5,000 requests per hour, applied across both read (query) and write
+  (mutation) operations against the single /graphql/ endpoint. Requests are
+  authenticated with a Personal Access Token Bearer credential. Because the API
+  is GraphQL, a single HTTP request may resolve many fields; limits are counted
+  per HTTP request, not per resolved field.
+notes: >-
+  The 5,000 requests/hour figure is from the developer documentation and may
+  change; confirm against the live DeepSource API documentation on
+  reconciliation. Specific burst behavior and Retry-After headers are not
+  reconciled in this artifact.
+sources:
+- https://docs.deepsource.com/docs/developers/api
+- https://docs.deepsource.com/docs/developers/api/schema
+responseCodes:
+  throttled: 429
+limits:
+- name: Requests Per Hour
+  scope: user
+  metric: requests
+  limit: 5000
+  notes: Per-user limit across both read and write GraphQL operations on /graphql/.
+policies:
+- name: Single Endpoint
+  description: All queries and mutations POST to the one /graphql/ endpoint; limits are per HTTP request.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter on HTTP 429 and batch fields into fewer requests where possible.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,185 @@
+{
+  "info": {
+    "name": "DeepSource GraphQL API",
+    "description": "DeepSource developer platform GraphQL API. All operations POST to the single endpoint https://api.deepsource.com/graphql/ with a JSON body containing a query and optional variables. Authentication uses a Personal Access Token passed as a Bearer credential.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{personalAccessToken}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.deepsource.com" }
+  ],
+  "item": [
+    {
+      "name": "Repositories",
+      "item": [
+        {
+          "name": "Authenticated user (viewer)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql/",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql", ""]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"query { viewer { email } }\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "Fetch the authenticated user's profile via the viewer root field."
+          }
+        },
+        {
+          "name": "Fetch a repository",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql/",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql", ""]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"query { repository(name: \\\"demo-go\\\", login: \\\"cyberdyne\\\", vcsProvider: GITHUB) { name defaultBranch dsn isPrivate isActivated } }\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "Fetch repository metadata via the repository root field (name, login, vcsProvider)."
+          }
+        },
+        {
+          "name": "Activate repository (mutation)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql/",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql", ""]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"mutation ($input: ActivateRepositoryInput!) { activateRepository(input: $input) { ok } }\",\n  \"variables\": { \"input\": { \"repositoryId\": \"UmVwb3NpdG9yeTox\" } }\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "Activate DeepSource analysis on a repository via the activateRepository mutation."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Issues",
+      "item": [
+        {
+          "name": "Repository runs and issues",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql/",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql", ""]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"query { repository(name: \\\"my-app\\\", login: \\\"myorg\\\", vcsProvider: GITHUB) { analysisRuns { edges { node { runUid } } } issues { edges { node { issue { shortcode } } } } } }\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "Fetch analysis runs and detected issues for a repository."
+          }
+        },
+        {
+          "name": "Dependency vulnerabilities (SCA)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql/",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql", ""]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"query { repository(name: \\\"my-app\\\", login: \\\"myorg\\\", vcsProvider: GITHUB) { dependencyVulnerabilityOccurrences(first: 10) { edges { node { vulnerability { identifier severity cvssV3BaseScore } package { name ecosystem } } } } } }\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "Fetch SCA dependency vulnerability occurrences for a repository."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Runs and Checks",
+      "item": [
+        {
+          "name": "Fetch a run by UID",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql/",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql", ""]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"query ($runUid: String!) { run(runUid: $runUid) { runUid status commitOid checks { edges { node { analyzer { shortcode } status introducedIssuesCount resolvedIssuesCount } } } } }\",\n  \"variables\": { \"runUid\": \"00000000-0000-0000-0000-000000000000\" }\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "Fetch an analysis run and its per-analyzer checks via the run root field."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Analyzers",
+      "item": [
+        {
+          "name": "List analyzers",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql/",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql", ""]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"query { analyzers { edges { node { name shortcode } } } }\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "description": "List available code analyzers via the analyzers root field."
+          }
+        }
+      ]
+    }
+  ]
+}

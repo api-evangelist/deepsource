@@ -1,0 +1,98 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: DeepSource
+providerId: deepsource
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Code Quality
+- Static Analysis
+- Code Review
+- Security
+- GraphQL
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of DeepSource spend. DeepSource bills the Team plan per active
+  contributor per month (annual billing), with a free Open Source plan for
+  public repositories and a custom-priced Enterprise plan for self-hosted
+  deployments. AI Review and Autofix are pay-as-you-go credits on the Open
+  Source plan. The primary cost driver is the count of active (committing)
+  contributors, since read-only and non-committing members are not billed.
+notes: >-
+  Per-seat rate ($24/active contributor/month, annual) reflects the February
+  2026 pricing change and may change; verify against the live DeepSource pricing
+  page during reconciliation.
+sources:
+- https://deepsource.com/pricing
+- https://docs.deepsource.com/docs/developers/api
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: DeepSource
+serviceCategory: Developer Tools
+billingModel:
+  pricingCategory: Subscription
+  billingFrequency: Annual
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+  - Purchase
+  - Adjustment
+focusColumns:
+  ServiceName: DeepSource
+  ServiceCategory: Developer Tools
+  ProviderName: DeepSource
+  PublisherName: DeepSource
+  InvoiceIssuerName: DeepSource
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Subscription
+meters:
+- name: active_contributors
+  description: Active (committing) contributors on the Team plan, billed per seat per month with annual billing.
+  unit: seats
+  aggregation: max
+  dimensions:
+  - account
+  - team
+- name: ai_review_credits
+  description: Pay-as-you-go AI Review usage on the Open Source plan.
+  unit: credits
+  aggregation: sum
+  dimensions:
+  - account
+  - repository
+- name: autofix_credits
+  description: Pay-as-you-go Autofix usage on the Open Source plan.
+  unit: credits
+  aggregation: sum
+  dimensions:
+  - account
+  - repository
+- name: pr_reviews
+  description: Pull request reviews consumed against plan-included monthly allotment.
+  unit: reviews
+  aggregation: sum
+  dimensions:
+  - account
+  - repository
+principles:
+- name: Visibility
+  description: Track the count of active contributors per team; reconcile seat counts against the DeepSource billing page each cycle.
+- name: Allocation
+  description: Map repositories and teams to internal cost centers; attribute AI Review / Autofix credits per repo.
+- name: Optimization
+  description: Keep read-only and non-committing members unbilled; move qualifying public repos to the free Open Source plan; right-size active-contributor seats.
+- name: Accountability
+  description: Assign an owner per team / account; review seat count and pay-as-you-go credit burn against budget on the annual cycle.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

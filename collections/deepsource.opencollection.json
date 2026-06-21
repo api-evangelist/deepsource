@@ -1,0 +1,153 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "DeepSource GraphQL API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{personalAccessToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Repositories",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authenticated user (viewer)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.deepsource.com/graphql/",
+            "headers": [
+              { "name": "Content-Type", "value": "application/json" },
+              { "name": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"query { viewer { email } }\"}"
+            }
+          },
+          "docs": "Fetch the authenticated user's profile via the viewer root field."
+        },
+        {
+          "info": {
+            "name": "Fetch a repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.deepsource.com/graphql/",
+            "headers": [
+              { "name": "Content-Type", "value": "application/json" },
+              { "name": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"query { repository(name: \\\"demo-go\\\", login: \\\"cyberdyne\\\", vcsProvider: GITHUB) { name defaultBranch dsn isPrivate isActivated } }\"}"
+            }
+          },
+          "docs": "Fetch repository metadata via the repository root field (name, login, vcsProvider)."
+        },
+        {
+          "info": {
+            "name": "Activate repository (mutation)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.deepsource.com/graphql/",
+            "headers": [
+              { "name": "Content-Type", "value": "application/json" },
+              { "name": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"mutation ($input: ActivateRepositoryInput!) { activateRepository(input: $input) { ok } }\",\"variables\":{\"input\":{\"repositoryId\":\"UmVwb3NpdG9yeTox\"}}}"
+            }
+          },
+          "docs": "Activate DeepSource analysis on a repository via the activateRepository mutation."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Issues",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Repository runs and issues",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.deepsource.com/graphql/",
+            "headers": [
+              { "name": "Content-Type", "value": "application/json" },
+              { "name": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"query { repository(name: \\\"my-app\\\", login: \\\"myorg\\\", vcsProvider: GITHUB) { analysisRuns { edges { node { runUid } } } issues { edges { node { issue { shortcode } } } } } }\"}"
+            }
+          },
+          "docs": "Fetch analysis runs and detected issues for a repository."
+        },
+        {
+          "info": {
+            "name": "Dependency vulnerabilities (SCA)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.deepsource.com/graphql/",
+            "headers": [
+              { "name": "Content-Type", "value": "application/json" },
+              { "name": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"query { repository(name: \\\"my-app\\\", login: \\\"myorg\\\", vcsProvider: GITHUB) { dependencyVulnerabilityOccurrences(first: 10) { edges { node { vulnerability { identifier severity cvssV3BaseScore } package { name ecosystem } } } } } }\"}"
+            }
+          },
+          "docs": "Fetch SCA dependency vulnerability occurrences for a repository."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Analyzers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List analyzers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.deepsource.com/graphql/",
+            "headers": [
+              { "name": "Content-Type", "value": "application/json" },
+              { "name": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"query { analyzers { edges { node { name shortcode } } } }\"}"
+            }
+          },
+          "docs": "List available code analyzers via the analyzers root field."
+        }
+      ]
+    }
+  ]
+}

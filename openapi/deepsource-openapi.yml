@@ -1,0 +1,141 @@
+openapi: 3.0.1
+info:
+  title: DeepSource GraphQL API
+  description: >-
+    HTTP transport description of the DeepSource developer platform, which is a
+    single GraphQL API. All operations are issued as an HTTP POST to /graphql/
+    with a JSON body containing a `query` string and optional `variables`.
+    Authentication uses a Personal Access Token (PAT) passed as a Bearer
+    credential. This OpenAPI document models the transport only; the operation
+    surface (queries, mutations, types) is defined by the GraphQL schema, see
+    graphql/deepsource-schema.graphql.
+  termsOfService: https://deepsource.com/terms
+  contact:
+    name: DeepSource Support
+    url: https://docs.deepsource.com/docs/developers/api
+  version: '1.0'
+servers:
+  - url: https://api.deepsource.com
+    description: DeepSource Cloud GraphQL endpoint (canonical .com host)
+  - url: https://api.deepsource.io
+    description: Legacy DeepSource Cloud GraphQL host
+paths:
+  /graphql/:
+    post:
+      operationId: graphqlQuery
+      tags:
+        - GraphQL
+      summary: Execute a GraphQL query or mutation
+      description: >-
+        Sends a GraphQL operation to the DeepSource API. The request body is a
+        JSON object with a required `query` string and optional `variables`
+        and `operationName`. Example queries cover repositories, analysis runs,
+        issues, checks, analyzers, and quality-gate mutations.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GraphQLRequest'
+            examples:
+              viewer:
+                summary: Authenticated user
+                value:
+                  query: "query { viewer { email } }"
+              repository:
+                summary: Fetch a repository
+                value:
+                  query: >-
+                    query { repository(name: "demo-go", login: "cyberdyne",
+                    vcsProvider: GITHUB) { name defaultBranch dsn isPrivate
+                    isActivated } }
+              runsAndIssues:
+                summary: Analysis runs and issues
+                value:
+                  query: >-
+                    query { repository(name: "my-app", login: "myorg",
+                    vcsProvider: GITHUB) { analysisRuns { edges { node { runUid
+                    } } } issues { edges { node { issue { shortcode } } } } } }
+              activateRepository:
+                summary: Activate analysis (mutation)
+                value:
+                  query: >-
+                    mutation ($input: ActivateRepositoryInput!) {
+                    activateRepository(input: $input) { ok } }
+                  variables:
+                    input:
+                      repositoryId: "UmVwb3NpdG9yeTox"
+      responses:
+        '200':
+          description: >-
+            A GraphQL response. Note that GraphQL returns HTTP 200 even for
+            operations that produce field-level `errors`; inspect the `errors`
+            array in the body.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GraphQLResponse'
+        '401':
+          description: Missing or invalid Personal Access Token.
+        '429':
+          description: Rate limit exceeded (5,000 requests per hour per user).
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        DeepSource Personal Access Token (PAT) generated from the dashboard,
+        passed as `Authorization: Bearer <PERSONAL_ACCESS_TOKEN>`.
+  schemas:
+    GraphQLRequest:
+      type: object
+      required:
+        - query
+      properties:
+        query:
+          type: string
+          description: The GraphQL query or mutation document.
+        operationName:
+          type: string
+          description: Name of the operation to execute, when the document has several.
+        variables:
+          type: object
+          additionalProperties: true
+          description: Key-value map of variables referenced by the operation.
+    GraphQLResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: The result of a successful (possibly partial) execution.
+        errors:
+          type: array
+          description: GraphQL execution errors, when present.
+          items:
+            $ref: '#/components/schemas/GraphQLError'
+    GraphQLError:
+      type: object
+      properties:
+        message:
+          type: string
+        path:
+          type: array
+          items:
+            type: string
+        locations:
+          type: array
+          items:
+            type: object
+            properties:
+              line:
+                type: integer
+              column:
+                type: integer
+        extensions:
+          type: object
+          additionalProperties: true
