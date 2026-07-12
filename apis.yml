@@ -105,6 +105,10 @@ apis:
     `codeFormatter`/`codeFormatters` root fields - list available analyzers and
     code formatters, their metadata, shortcodes, and supported transformers.
 common:
+- type: DomainSecurity
+  url: security/deepsource-domain-security.yml
+- type: Authentication
+  url: authentication/deepsource-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/deepsourcecorp
 - type: LinkedIn
@@ -119,6 +123,8 @@ common:
   url: rate-limits/deepsource-rate-limits.yml
 - type: FinOps
   url: finops/deepsource-finops.yml
+- url: https://deepsource.com/blog
+  type: Blog
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/deepsource-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: 'DeepSource Personal Access Token (PAT) generated from the dashboard, passed
+    as `Authorization: Bearer <PERSONAL_ACCESS_TOKEN>`.'
+  sources:
+  - openapi/deepsource-openapi.yml

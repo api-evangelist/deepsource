@@ -1,0 +1,28 @@
+generated: '2026-07-11'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: deepsource.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Jul 21 16:02:22 2026 GMT
+  hsts: true
+  hsts_max_age: 63072000
+- host: docs.deepsource.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 21 12:07:58 2026 GMT
+  hsts: true
+  hsts_max_age: 63072000
+- host: api.deepsource.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct  6 15:35:36 2026 GMT
+  hsts: null
+domains:
+- domain: deepsource.com
+  dnssec: true
+  caa: []
+  spf: false
+  dmarc: true
+  dmarc_policy: none
