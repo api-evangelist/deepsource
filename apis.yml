@@ -105,6 +105,8 @@ apis:
     `codeFormatter`/`codeFormatters` root fields - list available analyzers and
     code formatters, their metadata, shortcodes, and supported transformers.
 common:
+- type: AgenticAccess
+  url: agentic-access/deepsource-agentic-access.yml
 - type: DomainSecurity
   url: security/deepsource-domain-security.yml
 - type: Authentication
