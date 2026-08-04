@@ -1,0 +1,14 @@
+{
+  "provider": "deepsource",
+  "sources": [
+    "deepsource-graphql-api-openapi.yml"
+  ],
+  "outputs": [
+    "deepsource-graphql-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
