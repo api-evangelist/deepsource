@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "DeepSource GraphQL API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "GraphQL",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Execute a GraphQL query or mutation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.deepsource.com/graphql/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Sends a GraphQL operation to the DeepSource API. The request body is a JSON object with a required `query` string and optional `variables` and `operationName`. Example queries cover repositories, analysis runs, issues, checks, analyzers, and quality-gate mutations."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
