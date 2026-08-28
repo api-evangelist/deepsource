@@ -7,6 +7,18 @@ description: DeepSource is a code-quality and security platform that performs st
   Its developer platform is a GraphQL API at https://api.deepsource.com/graphql/
   exposing repositories, analysis runs, issues, checks, analyzers, and quality-gate
   management, authenticated with a Personal Access Token Bearer credential.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
