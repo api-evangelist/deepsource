@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: DeepSource GraphQL API
+  title: DeepSource Graph QL API
   description: HTTP transport description of the DeepSource developer platform, which is a single GraphQL API. All operations are issued as an HTTP POST to /graphql/ with a JSON body containing a `query` string and optional `variables`. Authentication uses a Personal Access Token (PAT) passed as a Bearer credential. This OpenAPI document models the transport only; the operation surface (queries, mutations, types) is defined by the GraphQL schema, see graphql/deepsource-schema.graphql.
   termsOfService: https://deepsource.com/terms
   contact:
@@ -13,13 +13,13 @@ servers:
 - url: https://api.deepsource.io
   description: Legacy DeepSource Cloud GraphQL host
 tags:
-- name: GraphQL
+- name: Graph QL
 paths:
   /graphql/:
     post:
       operationId: graphqlQuery
       tags:
-      - GraphQL
+      - Graph QL
       summary: Execute a GraphQL query or mutation
       description: Sends a GraphQL operation to the DeepSource API. The request body is a JSON object with a required `query` string and optional `variables` and `operationName`. Example queries cover repositories, analysis runs, issues, checks, analyzers, and quality-gate mutations.
       security:
@@ -63,34 +63,6 @@ paths:
           description: Rate limit exceeded (5,000 requests per hour per user).
 components:
   schemas:
-    GraphQLRequest:
-      type: object
-      required:
-      - query
-      properties:
-        query:
-          type: string
-          description: The GraphQL query or mutation document.
-        operationName:
-          type: string
-          description: Name of the operation to execute, when the document has several.
-        variables:
-          type: object
-          additionalProperties: true
-          description: Key-value map of variables referenced by the operation.
-    GraphQLResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          additionalProperties: true
-          nullable: true
-          description: The result of a successful (possibly partial) execution.
-        errors:
-          type: array
-          description: GraphQL execution errors, when present.
-          items:
-            $ref: '#/components/schemas/GraphQLError'
     GraphQLError:
       type: object
       properties:
@@ -112,6 +84,35 @@ components:
         extensions:
           type: object
           additionalProperties: true
+    GraphQLRequest:
+      type: object
+      required:
+      - query
+      properties:
+        query:
+          type: string
+          description: The GraphQL query or mutation document.
+        operationName:
+          type: string
+          description: Name of the operation to execute, when the document has several.
+        variables:
+          type: object
+          additionalProperties: true
+          description: Key-value map of variables referenced by the operation.
+    GraphQLResponse:
+      type: object
+      properties:
+        data:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+          description: The result of a successful (possibly partial) execution.
+        errors:
+          type: array
+          description: GraphQL execution errors, when present.
+          items:
+            $ref: '#/components/schemas/GraphQLError'
   securitySchemes:
     bearerAuth:
       type: http
