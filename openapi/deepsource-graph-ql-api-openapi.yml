@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: DeepSource Graph QL API
+  title: DeepSource GraphQL API
   description: HTTP transport description of the DeepSource developer platform, which is a single GraphQL API. All operations are issued as an HTTP POST to /graphql/ with a JSON body containing a `query` string and optional `variables`. Authentication uses a Personal Access Token (PAT) passed as a Bearer credential. This OpenAPI document models the transport only; the operation surface (queries, mutations, types) is defined by the GraphQL schema, see graphql/deepsource-schema.graphql.
   termsOfService: https://deepsource.com/terms
   contact:
@@ -84,6 +84,20 @@ components:
         extensions:
           type: object
           additionalProperties: true
+    GraphQLResponse:
+      type: object
+      properties:
+        data:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+          description: The result of a successful (possibly partial) execution.
+        errors:
+          type: array
+          description: GraphQL execution errors, when present.
+          items:
+            $ref: '#/components/schemas/GraphQLError'
     GraphQLRequest:
       type: object
       required:
@@ -99,20 +113,6 @@ components:
           type: object
           additionalProperties: true
           description: Key-value map of variables referenced by the operation.
-    GraphQLResponse:
-      type: object
-      properties:
-        data:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-          description: The result of a successful (possibly partial) execution.
-        errors:
-          type: array
-          description: GraphQL execution errors, when present.
-          items:
-            $ref: '#/components/schemas/GraphQLError'
   securitySchemes:
     bearerAuth:
       type: http
