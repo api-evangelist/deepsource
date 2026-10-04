@@ -84,20 +84,6 @@ components:
         extensions:
           type: object
           additionalProperties: true
-    GraphQLResponse:
-      type: object
-      properties:
-        data:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-          description: The result of a successful (possibly partial) execution.
-        errors:
-          type: array
-          description: GraphQL execution errors, when present.
-          items:
-            $ref: '#/components/schemas/GraphQLError'
     GraphQLRequest:
       type: object
       required:
@@ -113,6 +99,20 @@ components:
           type: object
           additionalProperties: true
           description: Key-value map of variables referenced by the operation.
+    GraphQLResponse:
+      type: object
+      properties:
+        data:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+          description: The result of a successful (possibly partial) execution.
+        errors:
+          type: array
+          description: GraphQL execution errors, when present.
+          items:
+            $ref: '#/components/schemas/GraphQLError'
   securitySchemes:
     bearerAuth:
       type: http
