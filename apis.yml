@@ -51,6 +51,8 @@ apis:
   humanURL: https://docs.deepsource.com/docs/developers/api/repository
   baseURL: https://api.deepsource.com/graphql
   tags:
+  - GraphQL
+  tags_raw:
   - Graph QL
   properties:
   - type: OpenAPI
