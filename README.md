@@ -1,4 +1,4 @@
-# DeepSource (deepsource)
+# DeepSource
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,124 +66,122 @@
 
 DeepSource is a code-quality and security platform that performs static analysis, SCA, secrets detection, AI code review, and Autofix across repositories. Its developer platform is a GraphQL API at https://api.deepsource.com/graphql/ exposing repositories, analysis runs, issues, checks, analyzers, and quality-gate management, authenticated with a Personal Access Token Bearer credential.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/deepsource/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/deepsource/refs/heads/main/apis.yml)
+**Areas:** Code Quality · Static Analysis · Code Review · Security · GraphQL · Developer Tools
 
-## Tags
+## DeepSource on APIs.io
 
-- Code Quality
-- Static Analysis
-- Code Review
-- Security
-- GraphQL
+Everything profiled for DeepSource is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/deepsource/](https://apis.io/providers/deepsource/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (1)
 
-- **Created:** 2026-06-21
-- **Modified:** 2026-06-21
+- [DeepSource Graph QL API](https://apis.io/apis/deepsource/deepsource-graph-ql-api/) — The Graph QL API from DeepSource — 1 operation(s) for graph ql.
 
-## APIs
+### Published properties
 
-### DeepSource Repositories API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-GraphQL queries and mutations over the `repository` and `account` root fields - fetch repository metadata, DSN, default branch, activation state, enabled analyzers, and activate/deactivate analysis or update default branch.
+#### GraphQL (1)
 
-- **Human URL:** [https://docs.deepsource.com/docs/developers/api/repository](https://docs.deepsource.com/docs/developers/api/repository)
-- **Base URL:** `https://api.deepsource.com/graphql`
+GraphQL schemas.
 
-#### Tags
+- [DeepSource GraphQL API](https://apis.io/graphqls/deepsource/deepsource-graphql/)
 
-- Repositories
-- GraphQL
-- Configuration
+#### Agentic access (1)
 
-#### Properties
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- [Documentation](https://docs.deepsource.com/docs/developers/api)
-- [API Reference](https://docs.deepsource.com/docs/developers/api/repository)
-- [GraphQL](graphql/deepsource-graphql.md) — [GraphQL Specification](https://spec.graphql.org/)
-- [OpenAPI](openapi/deepsource-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/deepsource.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/deepsource.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Deepsource Agentic Access](https://apis.io/agentic-access/deepsource/deepsource-agentic-access/)
 
-### DeepSource Issues API
+#### Collections (2)
 
-GraphQL access to detected issues, issue occurrences, dependency vulnerability (SCA) occurrences, ignore rules, and team-level issue suppression across a repository's analysis results.
+Postman and Open Collection request collections.
 
-- **Human URL:** [https://docs.deepsource.com/docs/developers/api/schema](https://docs.deepsource.com/docs/developers/api/schema)
-- **Base URL:** `https://api.deepsource.com/graphql`
+- [DeepSource GraphQL API](https://apis.io/collections/deepsource/open-deepsource/)
+- [DeepSource GraphQL API](https://apis.io/collections/deepsource/open-deepsource-graphql-api/)
 
-#### Tags
+#### Security (2)
 
-- Issues
-- Occurrences
-- GraphQL
+Authentication, trust centre, and vulnerability disclosure.
 
-#### Properties
+- [Deepsource Authentication](https://apis.io/security/deepsource/deepsource-authentication/)
+- [Deepsource Domain Security](https://apis.io/security/deepsource/deepsource-domain-security/)
 
-- [Documentation](https://docs.deepsource.com/docs/developers/api)
-- [API Reference](https://docs.deepsource.com/docs/developers/api/schema)
-- [GraphQL](graphql/deepsource-graphql.md) — [GraphQL Specification](https://spec.graphql.org/)
-- [OpenAPI](openapi/deepsource-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/deepsource.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/deepsource.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Plans and pricing (1)
 
-### DeepSource Runs and Checks API
+Published plans, tiers and prices.
 
-GraphQL queries over the `run` root field and a repository's `analysisRuns` - fetch analysis runs by UID or commit SHA, their per-analyzer checks, status, and introduced/resolved issue counts.
+- [Deepsource Plans Pricing](https://apis.io/plans/deepsource/deepsource-plans-pricing/)
 
-- **Human URL:** [https://docs.deepsource.com/docs/developers/api/schema](https://docs.deepsource.com/docs/developers/api/schema)
-- **Base URL:** `https://api.deepsource.com/graphql`
+#### Rate limits (1)
 
-#### Tags
+Published request limits.
 
-- Runs
-- Checks
-- Analysis
-- GraphQL
+- [Deepsource Rate Limits](https://apis.io/rate-limits/deepsource/deepsource-rate-limits/)
 
-#### Properties
+#### FinOps (1)
 
-- [Documentation](https://docs.deepsource.com/docs/developers/api)
-- [API Reference](https://docs.deepsource.com/docs/developers/api/schema)
-- [GraphQL](graphql/deepsource-graphql.md) — [GraphQL Specification](https://spec.graphql.org/)
-- [OpenAPI](openapi/deepsource-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/deepsource.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/deepsource.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+What the API costs to run, by operation.
 
-### DeepSource Analyzers API
+- [Deepsource Finops](https://apis.io/finops/deepsource/deepsource-finops/)
 
-GraphQL queries over the `analyzer`/`analyzers` and `codeFormatter`/`codeFormatters` root fields - list available analyzers and code formatters, their metadata, shortcodes, and supported transformers.
+## Where to find this API
 
-- **Human URL:** [https://docs.deepsource.com/docs/developers/api/schema](https://docs.deepsource.com/docs/developers/api/schema)
-- **Base URL:** `https://api.deepsource.com/graphql`
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-#### Tags
-
-- Analyzers
-- Code Formatters
-- Transformers
-- GraphQL
-
-#### Properties
-
-- [Documentation](https://docs.deepsource.com/docs/developers/api)
-- [API Reference](https://docs.deepsource.com/docs/developers/api/schema)
-- [GraphQL](graphql/deepsource-graphql.md) — [GraphQL Specification](https://spec.graphql.org/)
-- [OpenAPI](openapi/deepsource-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/deepsource.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/deepsource.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [GitHub Organization](https://github.com/deepsourcecorp)
-- [LinkedIn](https://www.linkedin.com/company/deepsource)
 - [Website](https://deepsource.com)
 - [Documentation](https://docs.deepsource.com/docs/developers/api)
-- [Plans](plans/deepsource-plans-pricing.yml)
-- [Rate Limits](rate-limits/deepsource-rate-limits.yml)
-- [Fin Ops](finops/deepsource-finops.yml)
+- [Blog](https://deepsource.com/blog)
+- [GitHub](https://github.com/deepsourcecorp)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 28.1** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 55.7 |
+| Contract governance | 0.0 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 31.0 |
+| Access clarity | 7.9 |
+
+**Agent readiness 22.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 11.8** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/deepsource/](https://apis.io/providers/deepsource/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for DeepSource: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/deepsource/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
